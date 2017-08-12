@@ -1,0 +1,2 @@
+# BlooBot
+Discord Bot
