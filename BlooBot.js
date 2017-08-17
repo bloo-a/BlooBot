@@ -3,10 +3,6 @@ const client = new Discord.Client();
 const fs = require("fs");
 const config = require("./config.json");
 
-const owners = [config.ownerID1, config.ownerID2];
-
-
-
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -33,10 +29,11 @@ client.on("ready", () => {
 
 //owner commands
 client.on("message", (message) => {
+  let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
   if (message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
   //owner commands
-  if (owners.includes(message.author.id)){
+  if (message.author.id == config.ownerID){
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
@@ -48,7 +45,7 @@ client.on("message", (message) => {
     }
   }
   //mod commands
-  else if (message.member.roles.has(config.role)) {
+  else if (message.member.roles.has(modRole.id)) {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
@@ -76,5 +73,5 @@ client.on("message", (message) => {
 
 client.on("guildMemberAdd", (member) => {
   console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
-  member.guild.defaultChannel.send(`Welcome "${member.user.username}"!`);
+  member.guild.defaultChannel.send(`Welcome to Bloo's Asylum ${member.user.toString()}!`);
 });
