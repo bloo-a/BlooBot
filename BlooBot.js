@@ -35,53 +35,43 @@ client.on("ready", () => {
 client.on("message", (message) => {
   if (message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
-  if (!owners.includes(message.author.id)) return;
+  //owner commands
+  if (owners.includes(message.author.id)){
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+    try {
+      let commandFile = require(`./commands/owner/${command}.js`);
+      commandFile.run(client, message, args);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  //mod commands
+  else if (message.member.roles.has(config.role)) {
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
 
-  try {
-    let commandFile = require(`./commands/owner/${command}.js`);
-    commandFile.run(client, message, args);
-  } catch (err) {
-    console.error(err);
+    try {
+      let commandFile = require(`./commands/mod/${command}.js`);
+      commandFile.run(client, message, args);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  else {
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    try {
+      let commandFile = require(`./commands/global/${command}.js`);
+      commandFile.run(client, message, args);
+    } catch (err) {
+      console.error(err);
+    }
   }
 });
 
-//role commands
-client.on("message", (message) => {
-  if (message.author.bot) return;
-  if(message.content.indexOf(config.prefix) !== 0) return;
-  if(!message.member.roles.has(config.role)) return;
-
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-
-  try {
-    let commandFile = require(`./commands/mod/${command}.js`);
-    commandFile.run(client, message, args);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-
-
-//global commands
-client.on("message", message => {
-  if (message.author.bot) return;
-  if(message.content.indexOf(config.prefix) !== 0) return;
-
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-
-  try {
-    let commandFile = require(`./commands/global/${command}.js`);
-    commandFile.run(client, message, args);
-  } catch (err) {
-    console.error(err);
-  }
-});
 
 
 client.on("guildMemberAdd", (member) => {
