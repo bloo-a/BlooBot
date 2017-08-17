@@ -1,14 +1,28 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const fs = require("fs");
 const config = require("./config.json");
 
 const owners = [config.ownerID1, config.ownerID2];
 
+
+
+fs.readdir("./events/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    let eventFunction = require(`./events/${file}`);
+    let eventName = file.split(".")[0];
+    // super-secret recipe to call events with all their proper arguments *after* the `client` var.
+    client.on(eventName, (...args) => eventFunction.run(client, ...args));
+  });
+});
+
+
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 client.on("debug", (e) => console.info(e));
-
 client.login(config.token);
+
 
 client.on("ready", () => {
   console.log("I am ready!");
@@ -19,41 +33,53 @@ client.on("ready", () => {
 
 //owner commands
 client.on("message", (message) => {
-  // Exit and stop if it's not there
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (message.author.bot) return;
+  if(message.content.indexOf(config.prefix) !== 0) return;
   if (!owners.includes(message.author.id)) return;
-  if (message.content.startsWith(config.prefix + "admintest")) {
-    message.channel.send("hi admin");
-  }
-  //commands start here
 
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+  try {
+    let commandFile = require(`./commands/owner/${command}.js`);
+    commandFile.run(client, message, args);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 //role commands
 client.on("message", (message) => {
-  // Exit and stop if it's not there
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (message.author.bot) return;
+  if(message.content.indexOf(config.prefix) !== 0) return;
   if(!message.member.roles.has(config.role)) return;
-  if (message.content.startsWith(config.prefix + "modtest")) {
-    message.channel.send("hi daddy");
-  }
-  //commands start here
 
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+  try {
+    let commandFile = require(`./commands/mod/${command}.js`);
+    commandFile.run(client, message, args);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 
 
 //global commands
-client.on("message", (message) => {
-  // Exit and stop if it's not there
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+client.on("message", message => {
+  if (message.author.bot) return;
+  if(message.content.indexOf(config.prefix) !== 0) return;
 
-  //commands start here
-  if (message.content.startsWith(config.prefix + "ping")) {
-    message.channel.send("pong!");
-  }
-  if (message.content.startsWith(config.prefix + "test")) {
-    message.channel.send("shut the fuck up");
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+  try {
+    let commandFile = require(`./commands/global/${command}.js`);
+    commandFile.run(client, message, args);
+  } catch (err) {
+    console.error(err);
   }
 });
 
