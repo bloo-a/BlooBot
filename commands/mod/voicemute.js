@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
     .setTitle("Voice Mute")
     .setColor("#86FFF2")
-    .setDescription("Mute a user in a Voice channel\nParameters:")
+    .setDescription("Mute a user in a Voice channel\n**Parameters:**")
     .addField("User",
               "The user to be muted", true)
     .addField("Duration",
@@ -26,14 +26,14 @@ exports.run = (client, message, args) => {
     let muteRole = message.guild.roles.find("name", "Voice Muted");
 
     if (member.id == config.ownerID || member.id == config.botID){
-      message.channel.send("Nice try asshole");
+      message.channel.send("*Nice try asshole*");
     }
     else{
       member.setMute(true);
       const embed = new Discord.RichEmbed()
         .setTitle('Voice Muted '+membername)
         .setColor("#CE1126")
-        .setDescription('Duration: '+ ms(ms(duration), {long: true}) + '\nReason: '+reason);
+        .setDescription('Duration: '+ ms(ms(duration), {long: true}) + '\n**Reason:** '+reason);
       message.channel.send({embed});
 
       setTimeout(function(){

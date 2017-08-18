@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
       .setTitle("Kick")
       .setColor("#86FFF2")
-      .setDescription("Kick a user\nParameters:")
+      .setDescription("Kick a user\n**Parameters:**")
       .addField("User",
                 "The user to be kicked", true)
       .addField("Reason",
@@ -21,7 +21,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
       .setTitle('Kicked '+membername)
       .setColor("#CE1126")
-      .setDescription('Reason: '+reason);
+      .setDescription('**Reason:** '+reason);
     message.channel.send({embed});
   }
 };

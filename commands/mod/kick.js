@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
       .setTitle("Kick")
       .setColor("#86FFF2")
-      .setDescription("Kick a user\nParameters:")
+      .setDescription("Kick a user\n**Parameters:**")
       .addField("User",
                 "The user to be kicked", true)
       .addField("Reason",
@@ -18,14 +18,14 @@ exports.run = (client, message, args) => {
     let reason = message.content.split(/\s+/g).slice(2).join(" ");
     let membername = member.user.username;
     if (member.id == config.ownerID || member.id == config.botID){
-      message.channel.send("Nice try asshole");
+      message.channel.send("*Nice try asshole*");
     }
     else {
       member.kick(reason);
       const embed = new Discord.RichEmbed()
         .setTitle('Kicked '+membername)
         .setColor("#CE1126")
-        .setDescription('Reason: '+reason);
+        .setDescription('**Reason:** '+reason);
       message.channel.send({embed});
     }
   }

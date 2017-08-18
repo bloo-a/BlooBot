@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
     .setTitle("Mute")
     .setColor("#86FFF2")
-    .setDescription("Mute a user in a text channel\nParameters:")
+    .setDescription("Mute a user in a text channel\n**Parameters:**")
     .addField("User",
               "The user to be muted", true)
     .addField("Duration",
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
       .setTitle('Muted '+membername)
       .setColor("#CE1126")
-      .setDescription('Duration: '+ ms(ms(duration), {long: true}) + '\nReason: '+reason);
+      .setDescription('Duration: '+ ms(ms(duration), {long: true}) + '\n**Reason:** '+reason);
     message.channel.send({embed});
 
     setTimeout(function(){

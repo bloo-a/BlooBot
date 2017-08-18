@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
       .setTitle("COMMANDNAME")
       .setColor("#COLOUR")
-      .setDescription("COMMANDDESCRIPTION")
+      .setDescription("COMMANDDESCRIPTION\n**Parameters:**")
       .addField("PARAMETER1",
                 "PARAMETER DESCRIPTION", true)
       .addField("PARAMETER2",
