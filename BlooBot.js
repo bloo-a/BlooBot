@@ -2,6 +2,13 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const config = require("./config.json");
+var Cleverbot = require('cleverbot-node');
+cleverbot = new Cleverbot();
+
+cleverbot.configure({botapi: "IAMKEY"});
+cleverbot.write(cleverMessage, function (response) {
+  console.log(response.output);
+});
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
@@ -27,41 +34,54 @@ client.on("ready", () => {
 });
 
 
-//owner commands
+//command handler
 client.on("message", (message) => {
-  let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
   if (message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
-  //owner commands
-  if (message.author.id == config.ownerID){
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+  if(!message.channel.isPrivate){
+    let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
+    //owner commands
+    if (message.author.id == config.ownerID){
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+      const command = args.shift().toLowerCase();
 
-    try {
-      let commandFile = require(`./commands/owner/${command}.js`);
-      commandFile.run(client, message, args);
-    } catch (err) {
-      console.error(err);
+      try {
+        let commandFile = require(`./commands/owner/${command}.js`);
+        commandFile.run(client, message, args);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    //mod commands
+    else if (message.member.roles.has(modRole.id)) {
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+      const command = args.shift().toLowerCase();
+
+      try {
+        let commandFile = require(`./commands/mod/${command}.js`);
+        commandFile.run(client, message, args);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    else {
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+      const command = args.shift().toLowerCase();
+
+      try {
+        let commandFile = require(`./commands/global/${command}.js`);
+        commandFile.run(client, message, args);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
-  //mod commands
-  else if (message.member.roles.has(modRole.id)) {
+  else{
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     try {
-      let commandFile = require(`./commands/mod/${command}.js`);
-      commandFile.run(client, message, args);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  else {
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-
-    try {
-      let commandFile = require(`./commands/global/${command}.js`);
+      let commandFile = require(`./commands/help/${command}.js`);
       commandFile.run(client, message, args);
     } catch (err) {
       console.error(err);
@@ -69,6 +89,21 @@ client.on("message", (message) => {
   }
 });
 
+//reply array
+client.on("message", (message) => {
+  let msg = message.content.toLowerCase();
+  if (message.author.bot) return;
+  let responseObject = {
+  "gn": "Good Night!",
+  "good night": "Good Night!",
+  "berg": "Fuck you Berg!",
+  "pong!": "Shut the fuck up you're not funny",
+  "make me mod": "*no*"
+  };
+  if(responseObject[msg]) {
+    message.channel.send(responseObject[msg]);
+  }
+});
 
 
 client.on("guildMemberAdd", (member) => {
