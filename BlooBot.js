@@ -2,13 +2,12 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const config = require("./config.json");
-var Cleverbot = require('cleverbot-node');
-cleverbot = new Cleverbot();
+const ytdl = require("ytdl-core");
+const request = require("request");
+const getyoutubeID = require("get-youtube-id");
+const fetchVideoInfo = require("youtube-info");
 
-cleverbot.configure({botapi: "IAMKEY"});
-cleverbot.write(cleverMessage, function (response) {
-  console.log(response.output);
-});
+let music = {};
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
@@ -40,6 +39,13 @@ client.on("message", (message) => {
   if(message.content.indexOf(config.prefix) !== 0) return;
   if(!message.channel.isPrivate){
     let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
+    let guild = music[message.guild.id];
+      if (!guild) guild = music[message.guild.id] = {
+        queue: [],
+        skippers: [],
+        skipReq: 0,
+        isPlaying: false
+    };
     //owner commands
     if (message.author.id == config.ownerID){
       const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -47,7 +53,7 @@ client.on("message", (message) => {
 
       try {
         let commandFile = require(`./commands/owner/${command}.js`);
-        commandFile.run(client, message, args);
+        commandFile.run(client, message, args, guild);
       } catch (err) {
         console.error(err);
       }
@@ -59,7 +65,7 @@ client.on("message", (message) => {
 
       try {
         let commandFile = require(`./commands/mod/${command}.js`);
-        commandFile.run(client, message, args);
+        commandFile.run(client, message, args, guild);
       } catch (err) {
         console.error(err);
       }
@@ -70,13 +76,13 @@ client.on("message", (message) => {
 
       try {
         let commandFile = require(`./commands/global/${command}.js`);
-        commandFile.run(client, message, args);
+        commandFile.run(client, message, args, guild);
       } catch (err) {
         console.error(err);
       }
     }
   }
-  else{
+  else {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 

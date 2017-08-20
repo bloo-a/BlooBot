@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const config = require("../../config.json");
 
-exports.run = (client, message, args) => {
+exports.run = (client, message, args guild) => {
   if (message.content == "~COMMANDNAME"){
     const embed = new Discord.RichEmbed()
       .setTitle("COMMANDNAME")

@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const config = require("../../config.json");
 const fs = require('fs');
 
-exports.run = (client, message, args) => {
+exports.run = (client, message, args, guild) => {
   var commandlist = "\n";
   var fileNames = fs.readdirSync("./commands/global");
   const embed = new Discord.RichEmbed()

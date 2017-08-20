@@ -1,0 +1,28 @@
+{
+  "name": "bloobot",
+  "version": "1.0.0",
+  "description": "bloobot",
+  "main": "BlooBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlooStu2/BlooBot.git"
+  },
+  "author": "bloo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlooStu2/BlooBot/issues"
+  },
+  "homepage": "https://github.com/BlooStu2/BlooBot#readme",
+  "keywords": [],
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "get-youtube-id": "^1.0.0",
+    "node-gyp": "^3.6.2",
+    "node-opus": "^0.2.6",
+    "youtube-info": "^1.1.1",
+    "ytdl-core": "^0.16.0"
+  }
+}
