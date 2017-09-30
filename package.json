@@ -1,11 +1,10 @@
 {
   "name": "bloobot",
   "version": "1.0.0",
-  "description": "bloobot",
+  "description": "BlooBot",
   "main": "BlooBot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-	"start": "node BlooBot.js"
+	  "start": "node BlooBot.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +24,9 @@
     "node-opus": "^0.2.6",
     "youtube-info": "^1.1.1",
     "ytdl-core": "^0.16.0"
+  },
+  "engines": {
+    "node": "8.4.0",
+    "npm": "5.3.x"
   }
 }
