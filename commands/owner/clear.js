@@ -9,18 +9,8 @@ const fetchVideoInfo = require("youtube-info");
 
 exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
-  let voiceChannel = message.author.voiceChannel;
-  if (!guild.isPlaying) return message.channel.send("I am currently not playing anything");
-    if (!voiceChannel) return message.channel.send('You are not in a voice channel');
-  if(!client.voiceConnections.array().includes(message.guild.voiceChannel.id)) return message.channel.send('You are not in the same voice channel');
-  try {
-    message.guild.voiceConnection.dispatcher.resume();
-    return message.channel.send('**Resuming ⏯**');
-  }
-  catch (err) {
-    console.error(err);
-    return message.channel.send('Unable to resume');
-  }
+  if (!guild) return message.reply('No songs in queue.');
+  guild.queue.delete();
 };
 
 function getID(str, callback) {

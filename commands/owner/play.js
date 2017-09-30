@@ -10,7 +10,7 @@ let music = {};
 
 exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
-  if (!message.member.voiceChannel) return message.reply('Err...No voicechannel?');
+  if (!message.member.voiceChannel) return message.reply('You are currently not in a voice channel');
   if (guild.isPlaying) {
    getID(song, id => {
       if (!id) return message.reply('Unable to extract video.');
@@ -21,14 +21,32 @@ exports.run = (client, message, args, guild) => {
             guild.queue.push({
                info, requester: message.member
          });
-         message.reply(`The song: ***${info.title}*** has been added to the queue list.`);
+         let totaltime = guild.queue.map(a => a.info.length_seconds).reduce((arg1, arg2) => arg1+arg2);
+         let totalminutes = Math.floor(totaltime / 60);
+         let totalseconds = totaltime - tptalminutes * 60;
+         let songtime = info.length_seconds;
+         let songminutes = Math.floor(songtime / 60);
+         let songseconds = songtime - songminutes * 60;
+         const embed = new Discord.RichEmbed()
+           .setTitle(`**${info.title}**`)
+           .setColor("#800080")
+           .setAuthor(`Added by ${message.author}`, `${message.author.displayAvatarURL}`)
+           .setThumbnail(`${info.thumbnail}`)
+           .addField("Queue Position",
+                     `${guild.queue.array().length}`, true)
+           .addField("Time untill playing",
+                     `${totalminutes}:${totalseconds}`, true)
+           .addField("Duration",
+                     `${songminutes}:${songseconds}`, true);
 
+         message.channel.send({embed});
       });
    });
 
   }
   else {
   guild.isPlaying = true;
+  message.reply(`Searching for \`${song}\``);
    getID(song, id => {
    if (!id) return message.reply(' unable to extract video');
       ytdl.getInfo(id, (err, info) => {
@@ -77,7 +95,6 @@ function playMusic(guild, message) {
                   filter: 'audioonly'
               });
               message.channel.send(`Now playing: **${guild.queue[0].info.title}** as requested by ${guild.queue[0].requester.displayName}`);
-
               const dispatcher = connection.playStream(stream);
               dispatcher.on('error', console.log);
               dispatcher.on('debug', console.log);

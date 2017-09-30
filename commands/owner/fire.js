@@ -1,13 +1,16 @@
+const sql = require("sqlite");
+sql.open("./score.sqlite");
+
 const Discord = require("discord.js");
 const config = require("../../config.json");
 
 exports.run = (client, message, args) => {
-  if (message.content == "~COMMANDNAME"){
+  if (message.content == "~fire"){
     const embed = new Discord.RichEmbed()
-      .setTitle("COMMANDNAME")
-      .setColor("#COLOUR")
-      .setDescription("COMMANDDESCRIPTION\n**Parameters:**")
-      .addField("PARAMETER1",
+      .setTitle("Fire")
+      .setColor("#86FFF2")
+      .setDescription("Bloo's 🔥 tunes\n**Parameters:**")
+      .addField("",
                 "PARAMETER DESCRIPTION", true)
       .addField("PARAMETER2",
                 "PARAMETER DESCRIPTION", true);

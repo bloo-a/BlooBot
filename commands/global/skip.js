@@ -11,7 +11,7 @@ exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
   if (!guild || !guild.isPlaying || !message.guild.voiceConnection) return message.reply('No songs are in queue');
   if (!message.member.voiceChannel || message.member.voiceChannel.id !== message.guild.voiceConnection.channel.id) return message.reply('You need to be in the bot\'s voice channel to skip');
-  if (guild_config.skippers.includes(message.author.id)) return message.reply(' You\'ve already voted to skip');
+  if (guild.skippers.includes(message.author.id)) return message.reply(' You\'ve already voted to skip');
   if (message.author.id == config.ownerID){
     skip_song(message);
     message.reply('Skipped');

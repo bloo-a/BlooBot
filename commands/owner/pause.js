@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
-const config = require("./config.json");
+const config = require("../../config.json");
 const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
@@ -10,14 +10,16 @@ const fetchVideoInfo = require("youtube-info");
 exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
   let voiceChannel = message.member.voiceChannel;
-  if (!voiceChannel || voiceChannel.id !== message.guild.voiceConnection.channel.id) return message.reply('You are not in a voice channel');
+  if (!guild.isPlaying) return message.channel.send("I am currently not playing anything");
+  if (!voiceChannel) return message.channel.send('You are not in a voice channel');
+  if (!message.member.voiceChannel || !voiceChannel.connection) return message.channel.send('You are not in the same voice channel');
   try {
     message.guild.voiceConnection.dispatcher.pause();
-    return message.reply('Paused');
+    return message.channel.send('**Paused ⏸**');
   }
   catch (err) {
     console.error(err);
-    return message.reply('Unable to pause');
+    return message.channel.send('Unable to pause');
   }
 };
 

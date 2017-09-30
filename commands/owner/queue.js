@@ -10,7 +10,7 @@ const fetchVideoInfo = require("youtube-info");
 exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
   if (!guild) return message.reply('No songs in queue.');
-  message.channel.send(`\`\`\`Queue:\n${guild.queue.map(a => `**${a.info.title}** as requested by **${a.requester.user.username}**`).join('\n\n') || 'No songs currently, welp.'}\`\`\``);
+  message.channel.send(`Queue:\n${guild.queue.map(a => `**${a.info.title}** as requested by **${a.requester.user.username}**`).join('\n\n') || 'No songs currently, welp.'}`);
 };
 
 function getID(str, callback) {

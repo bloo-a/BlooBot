@@ -9,21 +9,21 @@ const fetchVideoInfo = require("youtube-info");
 
 exports.run = (client, message, args, guild) => {
   let song = args.join(' ');
-  if (!guild || !guild.isPlaying || !message.guild.voiceConnection) return message.reply('No songs are in queue');
-  if (!message.member.voiceChannel || message.member.voiceChannel.id !== message.guild.voiceConnection.channel.id) return message.reply('You need to be in the bot\'s voice channel to skip');
-  if (guild_config.skippers.includes(message.author.id)) return message.reply(' You\'ve already voted to skip');
+  if (!guild || !guild.isPlaying || !message.guild.voiceConnection) return message.reply('I am currently not playing anything');
+  if (!message.member.voiceChannel || message.member.voiceChannel.id !== message.guild.voiceConnection.channel.id) return message.reply('You are not in the same voice channel');
+  if (guild.skippers.includes(message.author.id)) return message.reply(' You\'ve already voted to skip');
   if (message.author.id == config.ownerID){
     skip_song(message);
-    message.reply('Skipped');
+    message.channel.send('**Skipped ⏩**');
   }
   else {
     guild.skippers.push(message.author.id);
     if (guild.skippers.length >= Math.floor(message.member.voiceChannel.members.size - 1) / 2) {
       skip_song(message);
-      message.reply('Skipped');
+      message.channel.send('**Skipped ⏩**');
     }
     else {
-      message.reply(` Your skip has been added. You need ${Math.ceil((msg.member.voiceChannel.members.size - 1) / 2) - guild_config.skippers.length} more votes to skip.`);
+      message.channel.send(`**Skip?** (${guild_config.skippers.length}/${Math.ceil((msg.member.voiceChannel.members.size - 1) / 2)}`);
     }
   }
 };

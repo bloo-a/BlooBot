@@ -6,20 +6,36 @@ const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+const http = require('http');
+const express = require('express');
+const app = express();
+
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
 
 exports.run = (client, message, args, guild) => {
-  let song = args.join(' ');
-  let voiceChannel = message.author.voiceChannel;
-  if (!guild.isPlaying) return message.channel.send("I am currently not playing anything");
-    if (!voiceChannel) return message.channel.send('You are not in a voice channel');
-  if(!client.voiceConnections.array().includes(message.guild.voiceChannel.id)) return message.channel.send('You are not in the same voice channel');
-  try {
-    message.guild.voiceConnection.dispatcher.resume();
-    return message.channel.send('**Resuming ⏯**');
+  let voiceChannel = message.member.voiceChannel;
+  if (!guild.isPlaying) return message.reply("Im not playing anything");
+  if (!voiceChannel) return message.reply('You are not in a voice channel');
+  if (!message.member.voiceChannel || !voiceChannel.connection) return message.reply('You need to be in the bot\'s voice channel to change volume');
+  if (args[1]>=0 || args[1]<=100){
+    try {
+      message.guild.voiceConnection.dispatcher.setVolume(args/100);
+      return message.reply('Volume set to `'+args+'%`');
+    }
+    catch (err) {
+      console.error(err);
+      return message.reply('Unable to set volume');
+    }
   }
-  catch (err) {
-    console.error(err);
-    return message.channel.send('Unable to resume');
+  else {
+    message.reply(', You know youre meant to give me a volume right?');
   }
 };
 

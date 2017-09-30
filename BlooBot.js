@@ -7,6 +7,7 @@ const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
 
+
 let music = {};
 
 fs.readdir("./events/", (err, files) => {
@@ -28,7 +29,7 @@ client.login(config.token);
 
 client.on("ready", () => {
   console.log("I am ready!");
-  client.user.setGame("with Bloo");
+  client.user.setPresence({ game: { name: 'with Bloo', type: 0 } });
   console.log(`Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
 });
 
@@ -36,8 +37,9 @@ client.on("ready", () => {
 //command handler
 client.on("message", (message) => {
   if (message.author.bot) return;
+  if (message.content.startsWith("~~")) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
-  if(!message.channel.isPrivate){
+  if(message.channel.type != "dm"){
     let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
     let guild = music[message.guild.id];
       if (!guild) guild = music[message.guild.id] = {
@@ -114,5 +116,7 @@ client.on("message", (message) => {
 
 client.on("guildMemberAdd", (member) => {
   console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
-  member.guild.defaultChannel.send(`Welcome to Bloo's Asylum ${member.user.toString()}!`);
+  member.guild.defaultChannel.send(`Welcome to Bloo's College ${member.user.toString()}!`);
+  let regRole = member.guild.roles.find("name", "Students");
+  member.addRole(regRole.id);
 });

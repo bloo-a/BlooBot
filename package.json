@@ -5,6 +5,7 @@
   "main": "BlooBot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+	"start": "node BlooBot.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,7 @@
   "homepage": "https://github.com/BlooStu2/BlooBot#readme",
   "keywords": [],
   "dependencies": {
-    "discord.js": "^11.1.0",
+    "discord.js": "github:hydrabolt/discord.js#11.1-dev",
     "get-youtube-id": "^1.0.0",
     "node-gyp": "^3.6.2",
     "node-opus": "^0.2.6",
