@@ -18,7 +18,7 @@
   "homepage": "https://github.com/BlooStu2/BlooBot#readme",
   "keywords": [],
   "dependencies": {
-    "discord.js": "github:hydrabolt/discord.js#11.1-dev",
+    "discord.js": "github:hydrabolt/discord.js",
     "get-youtube-id": "^1.0.0",
     "node-gyp": "^3.6.2",
     "node-opus": "^0.2.6",
