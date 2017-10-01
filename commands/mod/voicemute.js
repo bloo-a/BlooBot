@@ -25,7 +25,7 @@ exports.run = (client, message, args) => {
     let membername = member.user.username;
     let muteRole = message.guild.roles.find("name", "Voice Muted");
 
-    if (member.id == config.ownerID || member.id == config.botID){
+    if (member.id == process.env.ownerID || member.id == process.env.botID){
       message.channel.send("*Nice try asshole*");
     }
     else{
