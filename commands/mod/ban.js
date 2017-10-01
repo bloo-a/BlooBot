@@ -21,7 +21,7 @@ exports.run = (client, message, args) => {
     let reason = message.content.split(/\s+/g).slice(3).join(" ");
     let duration = message.content.split(/\s+/g)[2];
     let membername = member.user.username;
-    if (member.id == config.ownerID || member.id == config.botID){
+    if (member.id == process.env.ownerID || member.id == process.env.botID){
       message.channel.send("*Nice try asshole*");
     }
     else {

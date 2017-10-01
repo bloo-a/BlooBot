@@ -24,7 +24,7 @@ fs.readdir("./events/", (err, files) => {
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 client.on("debug", (e) => console.info(e));
-client.login(config.token);
+client.login(process.env.token);
 
 
 client.on("ready", () => {
@@ -38,7 +38,7 @@ client.on("ready", () => {
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.startsWith("~~")) return;
-  if(message.content.indexOf(config.prefix) !== 0) return;
+  if(message.content.indexOf(process.env.prefix) !== 0) return;
   if(message.channel.type != "dm"){
     let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
     let guild = music[message.guild.id];
@@ -49,8 +49,8 @@ client.on("message", (message) => {
         isPlaying: false
     };
     //owner commands
-    if (message.author.id == config.ownerID){
-      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    if (message.author.id == process.env.ownerID){
+      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -62,7 +62,7 @@ client.on("message", (message) => {
     }
     //mod commands
     else if (message.member.roles.has(modRole.id)) {
-      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -73,7 +73,7 @@ client.on("message", (message) => {
       }
     }
     else {
-      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -85,7 +85,7 @@ client.on("message", (message) => {
     }
   }
   else {
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     try {
