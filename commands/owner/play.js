@@ -5,6 +5,7 @@ const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+const ffmpeg = require('ffmpeg');
 let music = {};
 
 exports.run = (client, message, args, guild) => {
