@@ -18,11 +18,13 @@
   "homepage": "https://github.com/BlooStu2/BlooBot#readme",
   "keywords": [],
   "dependencies": {
+    "fs": "^0.0.1",
     "discord.js": "github:hydrabolt/discord.js",
     "get-youtube-id": "^1.0.0",
     "node-gyp": "^3.6.2",
     "node-opus": "^0.2.6",
     "youtube-info": "^1.1.1",
+    "express": "^4.9.8",
     "ytdl-core": "^0.16.0"
   },
   "engines": {
