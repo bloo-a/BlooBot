@@ -24,7 +24,8 @@
     "node-opus": "^0.2.6",
     "youtube-info": "^1.1.1",
     "express": "^4.9.8",
-    "ytdl-core": "^0.16.0"
+    "ytdl-core": "^0.16.0",
+    "FFMPEG": "^0.04"
   },
   "engines": {
     "node": "8.4.0",

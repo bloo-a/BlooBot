@@ -28,7 +28,7 @@ exports.run = (client, message, args, guild) => {
   }
   else {
   guild.isPlaying = true;
-  message.reply(`Searching for \`${song}\``);
+  message.channel.send(`Searching for **${song}**`);
    getID(song, id => {
    if (!id) return message.reply(' unable to extract video');
       ytdl.getInfo(id, (err, info) => {
