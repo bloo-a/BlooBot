@@ -125,3 +125,7 @@ client.on("guildMemberAdd", (member) => {
   let regRole = member.guild.roles.find("name", "Students");
   member.addRole(regRole.id);
 });
+
+client.on("guildCreate", (guild) => {
+  guild.owner.send("Thank you for adding me to your server!\n\nThere are a bunch of features that are not added by default:\nModerator commands\nMusic command containment\n\nIf you would like to enable them, just type `~AllowMods` or `~AllowContainment`");
+});
