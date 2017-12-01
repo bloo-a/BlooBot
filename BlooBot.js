@@ -110,6 +110,12 @@ client.on("message", (message) => {
   if(responseObject[msg]) {
     message.channel.send(responseObject[msg]);
   }
+  if (message.content.startsWith("!")) {
+    if (message.channel.id != process.env.musicchannel) {
+      message.delete();
+      message.channel.send(`This is a wierd looking music channel, please use #break-time`);
+    }
+  }
 });
 
 
