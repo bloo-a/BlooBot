@@ -113,7 +113,7 @@ client.on("message", (message) => {
   if (message.content.startsWith("!")) {
     if (message.channel.id != process.env.musicchannel) {
       message.delete();
-      message.channel.send(`*This is a wierd looking music channel ${message.author.toString()},* please use ${message.guild.find(process.env.musicchannel).toString()}`);
+      message.channel.send(`*This is a wierd looking music channel ${message.author.toString()},* please use ${message.guild.channels.find(process.env.musicchannel).toString()}`);
     }
   }
 });
