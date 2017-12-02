@@ -5,9 +5,21 @@ const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
-
+const pg = require("pg");
 
 let music = {};
+
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+});
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
@@ -48,7 +60,7 @@ client.on("message", (message) => {
         isPlaying: false
     };
     //owner commands
-    if (message.author.id == process.env.ownerID){
+    if (message.author.id == message.guild.owner.id){
       const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 

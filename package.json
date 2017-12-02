@@ -4,7 +4,7 @@
   "description": "BlooBot",
   "main": "BlooBot.js",
   "scripts": {
-	  "start": "node BlooBot.js"
+    "start": "node BlooBot.js"
   },
   "repository": {
     "type": "git",
