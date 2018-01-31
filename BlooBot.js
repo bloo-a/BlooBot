@@ -136,8 +136,6 @@ client.on("message", (message) => {
 client.on("guildMemberAdd", (member) => {
   console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
   member.guild.defaultChannel.send(`Welcome to Bloo's College ${member.user.toString()}!`);
-  let regRole = member.guild.roles.find("name", "Students");
-  member.addRole(regRole.id);
 });
 
 client.on("guildCreate", (guild) => {
