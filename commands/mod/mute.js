@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ms = require("ms");
 const fs = require("fs");
+const config = require("./config.json");
 
 exports.run = (client, message, args) => {
   if (message.content == "~mute"){
@@ -23,7 +24,7 @@ exports.run = (client, message, args) => {
     let reason = args.slice(3).join(" ");
     let membername = member.user.username;
     let muteRole = message.guild.roles.find("name", "Muted");
-    if (member.id == process.env.ownerID || member.id == process.env.botID){
+    if (member.id == config.ownerID || member.id == config.botID){
       message.channel.send("*Nice try asshole*");
     }
     else{

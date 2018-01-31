@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
+const config = require("./config.json");
 const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
@@ -11,7 +12,7 @@ let music = {};
 
 //
 // client.get('/db', function (request, response) {
-//   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+//   pg.connect(config.DATABASE_URL, function(err, client, done) {
 //     client.query('SELECT * FROM test_table', function(err, result) {
 //       done();
 //       if (err)
@@ -36,7 +37,7 @@ fs.readdir("./events/", (err, files) => {
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 client.on("debug", (e) => console.info(e));
-client.login(process.env.token);
+client.login(config.token);
 
 
 client.on("ready", () => {
@@ -50,7 +51,7 @@ client.on("ready", () => {
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.startsWith("~~")) return;
-  if(message.content.indexOf(process.env.prefix) !== 0) return;
+  if(message.content.indexOf(config.prefix) !== 0) return;
   if(message.channel.type != "dm"){
     let modRole = message.guild.roles.find("name", "BlooBot's Daddy");
     let guild = music[message.guild.id];
@@ -62,7 +63,7 @@ client.on("message", (message) => {
     };
     //owner commands
     if (message.author.id == message.guild.owner.id){
-      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -74,7 +75,7 @@ client.on("message", (message) => {
     }
     //mod commands
     else if (message.member.roles.has(modRole.id)) {
-      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -85,7 +86,7 @@ client.on("message", (message) => {
       }
     }
     else {
-      const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
 
       try {
@@ -97,7 +98,7 @@ client.on("message", (message) => {
     }
   }
   else {
-    const args = message.content.slice(process.env.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     try {
@@ -124,9 +125,9 @@ client.on("message", (message) => {
     message.channel.send(responseObject[msg]);
   }
   if (message.content.startsWith("!") || message.content.startsWith(">") || message.content.startsWith(".")) {
-    if (message.channel.id != process.env.musicchannel) {
+    if (message.channel.id != config.musicchannel) {
       message.delete();
-      message.channel.send(`*This is a wierd looking music channel ${message.author.toString()},* please use ${message.guild.channels.get(process.env.musicchannel).toString()}`);
+      message.channel.send(`*This is a wierd looking music channel ${message.author.toString()},* please use ${message.guild.channels.get(config.musicchannel).toString()}`);
     }
   }
 });

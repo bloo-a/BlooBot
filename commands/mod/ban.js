@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const config = require("./config.json");
 
 exports.run = (client, message, args) => {
   if (message.content == "~ban"){
@@ -20,7 +21,7 @@ exports.run = (client, message, args) => {
     let reason = message.content.split(/\s+/g).slice(3).join(" ");
     let duration = message.content.split(/\s+/g)[2];
     let membername = member.user.username;
-    if (member.id == message.guild.owner.id || member.id == process.env.botID){
+    if (member.id == message.guild.owner.id || member.id == config.botID){
       message.channel.send("*Nice try asshole*");
     }
     else {

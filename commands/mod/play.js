@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const fs = require("fs");
 const ytdl = require("ytdl-core");
 const request = require("request");
+const config = require("./config.json");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
 let music = {};
@@ -62,7 +63,7 @@ function getID(str, callback) {
 }
 
 function search_video(query, callback) {
-  request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + process.env.yt_api_key, (error, response, body) => {
+  request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + config.yt_api_key, (error, response, body) => {
     if (error) return message.reply('There was an error searching the requested song ' + message.author.toString());
     try {
       const json = JSON.parse(body);
