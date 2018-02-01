@@ -124,12 +124,6 @@ client.on("message", (message) => {
   if(responseObject[msg]) {
     message.channel.send(responseObject[msg]);
   }
-  if (message.content.startsWith("!") || message.content.startsWith(">") || message.content.startsWith(".")) {
-    if (message.channel.id != config.musicchannel) {
-      message.delete();
-      message.channel.send(`*This is a wierd looking music channel ${message.author.toString()},* please use ${message.guild.channels.get(config.musicchannel).toString()}`);
-    }
-  }
 });
 
 
