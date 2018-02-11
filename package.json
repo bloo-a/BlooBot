@@ -3,9 +3,6 @@
   "version": "2.0.0",
   "description": "BlooBot",
   "main": "BlooBot.js",
-  "scripts": {
-    "start": "node BlooBot.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlooStu2/BlooBot.git"
@@ -16,7 +13,6 @@
     "url": "https://github.com/BlooStu2/BlooBot/issues"
   },
   "homepage": "https://github.com/BlooStu2/BlooBot#readme",
-  "keywords": [],
   "dependencies": {
     "discord.js": "^11.3.0",
     "express": "^4.16.2",
