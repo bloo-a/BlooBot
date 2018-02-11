@@ -4,7 +4,7 @@
   "description": "BlooBot",
   "main": "BlooBot.js",
   "scripts": {
-	  "start": "node BlooBot.js"
+    "start": "node BlooBot.js"
   },
   "repository": {
     "type": "git",
@@ -18,14 +18,15 @@
   "homepage": "https://github.com/BlooStu2/BlooBot#readme",
   "keywords": [],
   "dependencies": {
-    "pg": "6.x",
-    "discord.js": "^11.2.1",
+    "discord.js": "^11.3.0",
+    "express": "^4.16.2",
+    "ffmpeg": "^0.0.4",
     "get-youtube-id": "^1.0.0",
+    "lokijs": "^1.5.2",
     "node-gyp": "^3.6.2",
     "node-opus": "^0.2.6",
-    "youtube-info": "^1.1.1",
-    "express": "^4.9.8",
-    "ffmpeg": "^0.0.4",
+    "pg": "^6.4.2",
+    "youtube-info": "^1.1.3",
     "ytdl-core": "^0.16.0"
   },
   "engines": {

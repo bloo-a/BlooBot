@@ -6,6 +6,8 @@ const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+var db = new loki('master.json');
+var servers = db.addCollection('servers');
 
 let music = {};
 
@@ -128,9 +130,11 @@ client.on("message", (message) => {
 
 client.on("guildMemberAdd", (member) => {
   console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
-  member.guild.defaultChannel.send(`Welcome to Bloo's College ${member.user.toString()}!`);
+  member.guild.defaultChannel.send(`Welcome to ${member.guild.name} ${member.user.toString()}!`);
+  let currserver = servers.find( {'name':member.guild.name});
+  currserver.membercount ++;
 });
 
 client.on("guildCreate", (guild) => {
-  guild.owner.send("Thank you for adding me to your server!\n\nThere are a bunch of features that are not added by default:\nModerator commands\nMusic command containment\n\nIf you would like to enable them, just type `~AllowMods` or `~AllowContainment`");
+  servers.insert({name:guild.name, owner:guild.owner, membercount:guild.memberCount});
 });
