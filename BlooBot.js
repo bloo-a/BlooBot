@@ -6,6 +6,8 @@ const ytdl = require("ytdl-core");
 const request = require("request");
 const getyoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+const loki = require("lokijs");
+
 var db = new loki('master.json');
 var servers = db.addCollection('servers');
 
