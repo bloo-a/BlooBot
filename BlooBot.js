@@ -2,18 +2,15 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const config = require("./config.json");
-const ytdl = require("ytdl-core");
 const request = require("request");
-const getyoutubeID = require("get-youtube-id");
-const fetchVideoInfo = require("youtube-info");
-const loki = require("lokijs");
+const Enmap = require('enmap');
+const EnmapLevel = require('enmap-level');
 
-var db = new loki('master.json');
-var servers = db.addCollection('servers');
+const tableSource = new EnmapLevel({name: "alias"});
+client.alias = new Enmap({provider: tableSource});
 
 let music = {};
 
-//
 // client.get('/db', function (request, response) {
 //   pg.connect(config.DATABASE_URL, function(err, client, done) {
 //     client.query('SELECT * FROM test_table', function(err, result) {
@@ -76,18 +73,6 @@ client.on("message", (message) => {
         console.error(err);
       }
     }
-    //mod commands
-    else if (message.member.roles.has(modRole.id)) {
-      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-      const command = args.shift().toLowerCase();
-
-      try {
-        let commandFile = require(`./commands/mod/${command}.js`);
-        commandFile.run(client, message, args, guild);
-      } catch (err) {
-        console.error(err);
-      }
-    }
     else {
       const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
       const command = args.shift().toLowerCase();
@@ -100,43 +85,16 @@ client.on("message", (message) => {
       }
     }
   }
-  else {
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-
-    try {
-      let commandFile = require(`./commands/help/${command}.js`);
-      commandFile.run(client, message, args);
-    } catch (err) {
-      console.error(err);
-    }
-  }
 });
 
 //reply array
 client.on("message", (message) => {
   let msg = message.content.toLowerCase();
   if (message.author.bot) return;
-  let responseObject = {
-  "gn": "Good Night!",
-  "good night": "Good Night!",
-  "berg": "Fuck you Berg!",
-  "pong!": "Shut the fuck up you're not funny",
-  "make me mod": "*no*"
-  };
-  if(responseObject[msg]) {
-    message.channel.send(responseObject[msg]);
+  if(client.alias.get(msg)) {
+    message.channel.send(client.alias.get(msg));
   }
-});
-
-
-client.on("guildMemberAdd", (member) => {
-  console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
-  member.guild.defaultChannel.send(`Welcome to ${member.guild.name} ${member.user.toString()}!`);
-  let currserver = servers.find( {'name':member.guild.name});
-  currserver.membercount ++;
-});
-
-client.on("guildCreate", (guild) => {
-  servers.insert({name:guild.name, owner:guild.owner, membercount:guild.memberCount});
+  if (msg.toLowerCase() == "e"){
+    message.react("🇪");
+  }
 });
