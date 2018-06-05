@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
     if (args[0] == "list"){
       var keys = client.alias.keyArray();
       var responses = client.alias.array();
-      let list = `\`\`\`\n`;
+      let list = `\`\`\`yaml\n`;
       for (var i = 0; i < keys.length; i++) {
         list += `${keys[i]} : ${responses[i]}\n`;
       }
