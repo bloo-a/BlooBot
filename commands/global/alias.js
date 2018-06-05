@@ -4,6 +4,7 @@ const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
 
 exports.run = (client, message, args) => {
+  args = args.map(x => x.toLowerCase());
   if (message.content == "~alias"){
     const embed = new Discord.RichEmbed()
       .setTitle("Alias")
