@@ -19,9 +19,9 @@ exports.run = (client, message, args) => {
   else {
     if (args[0] == "add"){
       let newargs = args.slice(1).join(" ").split(";");
-      let key = newargs[0];
+      let key = newargs[0].toLowerCase();
       let myresponse = newargs[1];
-      client.alias.set(key, {response:myresponse, author:message.author.toString()});
+      client.alias.set(key, {response:myresponse, author:message.author.tag});
       message.channel.send(`Alias \`${key}\` has been created`);
     }
     if (args[0] == "del" || args[0] == "delete" || args[0] == "remove" || args[0] == "rem"){
