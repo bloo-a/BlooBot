@@ -21,7 +21,7 @@ exports.run = (client, message, args) => {
       let newargs = args.slice(1).join(" ").split(";");
       let key = newargs[0];
       let myresponse = newargs[1];
-      client.alias.set(key, {response:myresponse, author:message.author});
+      client.alias.set(key, {response:myresponse, author:message.author.toString()});
       message.channel.send(`Alias \`${key}\` has been created`);
     }
     if (args[0] == "del" || args[0] == "delete" || args[0] == "remove" || args[0] == "rem"){
@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
       var responses = client.alias.array();
       let list = `\`\`\`yaml\n`;
       for (var i = 0; i < keys.length; i++) {
-        list += `${keys[i]} : ${responses[i].response} #Created by ${responses[i].author.toString()}\n`;
+        list += `${keys[i]} : ${responses[i].response} #Created by ${responses[i].author}\n`;
       }
       list += `\`\`\``;
       message.channel.send(`List of __**${keys.length}**__ aliases`);
