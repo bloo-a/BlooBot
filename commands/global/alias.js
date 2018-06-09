@@ -36,9 +36,9 @@ exports.run = (client, message, args) => {
     if (args[0] == "list"){
       var keys = client.alias.keyArray();
       var responses = client.alias.array();
-      let list = `\`\`\`yaml\n`;
+      let list = `\`\`\`\n`;
       for (var i = 0; i < keys.length; i++) {
-        list += `${keys[i]} : ${responses[i].response} #Created by ${responses[i].author}\n`;
+        list += `${keys[i]} : ${responses[i].response} | Created by ${responses[i].author}\n`;
       }
       list += `\`\`\``;
       message.channel.send(`List of __**${keys.length}**__ aliases`);
