@@ -20,21 +20,26 @@ exports.run = (client, message, args) => {
     if (args[0] == "add"){
       let newargs = args.slice(1).join(" ").split(";");
       let key = newargs[0];
-      let response = newargs[1];
-      client.alias.set(key, response);
+      let myresponse = newargs[1];
+      client.alias.set(key, {response:myresponse, author:message.author});
       message.channel.send(`Alias \`${key}\` has been created`);
     }
     if (args[0] == "del" || args[0] == "delete" || args[0] == "remove" || args[0] == "rem"){
       let key = args[1];
-      client.alias.delete(key);
-      message.channel.send(`Alias \`${key}\` has been deleted`);
+      if (!client.alias.has(key)){
+        message.channel.send(`Alias \`${key}\` does not exist`);
+      }
+      else{
+        client.alias.delete(key);
+        message.channel.send(`Alias \`${key}\` has been deleted`);
+      }
     }
     if (args[0] == "list"){
       var keys = client.alias.keyArray();
       var responses = client.alias.array();
       let list = `\`\`\`yaml\n`;
       for (var i = 0; i < keys.length; i++) {
-        list += `${keys[i]} : ${responses[i]}\n`;
+        list += `${keys[i]} : ${responses[i].response} #Created by ${responses[i].author.toString()}\n`;
       }
       list += `\`\`\``;
       message.channel.send(`List of __**${keys.length}**__ aliases`);

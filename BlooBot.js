@@ -92,7 +92,7 @@ client.on("message", (message) => {
   let msg = message.content.toLowerCase();
   if (message.author.bot) return;
   if(client.alias.get(msg)) {
-    message.channel.send(client.alias.get(msg));
+    message.channel.send(client.alias.get(msg).response);
   }
   if (msg.toLowerCase() == "e"){
     message.react("🇪");
