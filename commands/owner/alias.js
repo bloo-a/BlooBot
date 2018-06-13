@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
       }
     }
     if (args[0] == "del" || args[0] == "delete" || args[0] == "remove" || args[0] == "rem"){
-      let key = args.slice(1);
+      let key = args.slice(1).join(" ");
       if (!client.alias.has(key)){
         message.channel.send(`Alias \`${key}\` does not exist`);
       }
