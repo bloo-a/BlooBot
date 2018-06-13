@@ -17,7 +17,8 @@ exports.run = (client, message, args) => {
   }
   else {
     if (args[0] == "add"){
-      if (message.member.roles.has(456401001365241878)) {
+      let unfunnyrole = message.guild.roles.find("name", "unfunny");
+      if (message.member.roles.has(unfunnyrole.id)) {
         message.channel.send(`No thanks, its not that funny`);
       }
       else{
