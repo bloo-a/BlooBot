@@ -1,7 +1,7 @@
 # BlooBot
 Hi guys this is my in development Discord Bot
 
-Made by Bloo#9811
+Made by Bloo#0666
 
 I have no idea what to do or what i am going to do with this bot ^^
 
