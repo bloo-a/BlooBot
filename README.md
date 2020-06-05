@@ -1,7 +1,8 @@
 # BlooBot
+## Moved to GitLab: https://gitlab.com/bloouwu/bloobot
 Hi guys this is my in development Discord Bot
 
-Made by Bloo#0666
+Made by Bloo#0860
 
 I have no idea what to do or what i am going to do with this bot ^^
 
